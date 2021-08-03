@@ -1,0 +1,19 @@
+[0m[[0m[0mdebug[0m] [0m[0mPackaging C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\logic_2.13-0.0.1-SNAPSHOT.jar ...[0m
+[0m[[0m[0mdebug[0m] [0m[0mInput file mappings:[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment\exercise[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment\exercise[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment\exercise\superstar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment\exercise\superstar[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment\exercise\superstar\candidate[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment\exercise\superstar\candidate[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment\exercise\superstar\candidate\logic[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment\exercise\superstar\candidate\logic[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment\exercise\superstar\candidate\logic\Stub$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment\exercise\superstar\candidate\logic\Stub$.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	sparkbeyond\recruitment\exercise\superstar\candidate\logic\Stub.class[0m
+[0m[[0m[0mdebug[0m] [0m[0m	  C:\Users\Yuval\yuval\scala-projects\logic\target\scala-2.13\classes\sparkbeyond\recruitment\exercise\superstar\candidate\logic\Stub.class[0m
+[0m[[0m[0mdebug[0m] [0m[0mDone packaging.[0m
