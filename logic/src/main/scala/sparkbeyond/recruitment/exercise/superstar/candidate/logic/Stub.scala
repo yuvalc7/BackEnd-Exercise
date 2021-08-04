@@ -1,64 +1,86 @@
 package sparkbeyond.recruitment.exercise.superstar.candidate.logic
 
-import sun.jvm.hotspot.HelloWorld.e
-
 import scala.collection.mutable.HashMap
 import java.security.{MessageDigest, NoSuchAlgorithmException}
 import java.nio.charset.StandardCharsets
-import java.security.spec.InvalidKeySpecException
 import java.text.SimpleDateFormat
-import java.util.{Calendar, Date}
-import java.util.Base64;
+import java.util.Date
+import java.util.Base64
+import scala.util.{Failure, Success, Try};
 
 class Stub {
   // placeholder for actual logic code
 
-  var hashMap: HashMap[String,String] = new HashMap[String, String];
+  private var hashMap: HashMap[String,String] = new HashMap[String, String];
 
-  var hashKeyTimestamp: Vector[String] = Vector();
+  //really efficient data stricter without fix size in aspect of memory
+  private var hashKeyTimestamp: Vector[String] = Vector();
 
+  private def Register(hashKey: String, salt:String, algorithm:String):String  = {
 
-  def GetHashKeysListRegister () : String={
-    var strResult : String = "";
+    hashMap.get(hashKey) match {
+      case Some(str) => throw new Exception("This Key Already Exist, Please Try Register With Different Key !")
+      case None => StoreDataOrThrow(hashKey,algorithm,algorithm)
+    }
+  }
+
+  /**
+   * this function check if algorithm exist => store in hashmap[String,String] as
+   * key=>hashKey, value=> salt / algorithm
+   * else throw Exception
+   * @param hashKey = entry key
+   * @param salt =  value to store as string
+   * @param algorithm = value value to store as string
+   * @return String or Exception
+   */
+  private def StoreDataOrThrow(hashKey: String, salt:String, algorithm:String): String={
+    try{
+      MessageDigest.getInstance(algorithm)
+      hashMap.put(hashKey, salt + " / " + algorithm);
+      val timeStamp: String = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss").format(new Date);
+      hashKeyTimestamp = hashKeyTimestamp :+ timeStamp;
+      "Register Successfully";
+    }
+    catch {
+      case e @ (_: NoSuchAlgorithmException ) => throw new RuntimeException("No Such Algorithm", e)
+    }
+  }
+
+  /**
+   * this function iterate hashmap keys , for each key append to listRegisterStr [key , algorithm, createdTime]
+   * if map is empty return No Registration are made
+   * @return string
+   */
+  private def GetHashKeysListRegister (): String={
+    val sb:StringBuilder = new StringBuilder()
     var index: Int = 0;
     hashMap.keys.foreach { (key) =>
         hashMap.get(key) match {
         case Some(str) => {
-          strResult = strResult + "[ " + key + " , " + str.split("/")(1) + " , " +hashKeyTimestamp(index) + " ] ";
+          val algorithm: String = str.split("/")(1);
+          sb.append("[ " + key + " , " + algorithm + " , " +hashKeyTimestamp(index) + " ] ");
           index = index+1;
         }
         case None => throw new Exception("An Error Occurred, Pleas Try Again In A Few Minutes ");
       }
     };
-    strResult ;
+    if(sb.isEmpty){ return "No Registration are made" };
+    sb.toString()
   }
 
-  def Register(hashKey: String, salt:String, algorithm:String):String  = {
+  private def GetHashByKey(hashKey: String, secret: String): String ={
 
-      hashMap.get(hashKey) match {
-        case Some(str) => throw new Exception("This Key Already Exist, Please Try Register With Different Key !")
-        case None => {
-          val timeStamp = new SimpleDateFormat("YYYY/MM/dd HH:mm:ss").format(new Date);
-          hashMap.put(hashKey, salt + " / " + algorithm);
-          hashKeyTimestamp = hashKeyTimestamp :+ timeStamp;
-          "Register Successfully";
-        }
-      }
-  }
-
-  def GetHashByKey(hashKey: String, secret: String): String ={
-
-      val saltAndAlgorithm: Array[String] = hashMap.get(hashKey) match {
+        val saltAndAlgorithm: Array[String] = hashMap.get(hashKey) match {
         case Some(str) => str.split("/");
         case None => throw new RuntimeException("Non Existing Hash Key");
       }
       try {
-        val currentAlgorithm = MessageDigest.getInstance(saltAndAlgorithm(1).trim());
-        currentAlgorithm.update(saltAndAlgorithm(0).getBytes());// equal to salt + secret
+        val salt: String = saltAndAlgorithm(0);
+        val algorithm: String = saltAndAlgorithm(1).trim();
+        val currentAlgorithm: MessageDigest = MessageDigest.getInstance(algorithm);
+        currentAlgorithm.update(salt.getBytes());// equal to salt + secret
         val bytes: Array[Byte]  = currentAlgorithm.digest(secret.getBytes(StandardCharsets.UTF_8))
         Base64.getEncoder.encodeToString(bytes)
-      }catch {
-        case e @ (_: NoSuchAlgorithmException ) => throw new RuntimeException("No Such Algorithm", e)
       }
   }
 }

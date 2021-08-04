@@ -1,4 +1,4 @@
-[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Yuval\yuval\scala-projects\logic\src\main\scala\sparkbeyond\recruitment\exercise\superstar\candidate\logic\Stub.scala:66:14: This catches all Throwables. If this is really intended, use `case e : Throwable` to clear this warning.[0m
-[0m[[0m[33mwarn[0m] [0m[0m        case e => throw new Exception(e)[0m
-[0m[[0m[33mwarn[0m] [0m[0m             ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mC:\Users\Yuval\yuval\scala-projects\logic\src\main\scala\sparkbeyond\recruitment\exercise\superstar\candidate\logic\Stub.scala:77:7: A try without a catch or finally is equivalent to putting its body in a block; no exceptions are handled.[0m
+[0m[[0m[33mwarn[0m] [0m[0m      try {[0m
+[0m[[0m[33mwarn[0m] [0m[0m      ^[0m
 [0m[[0m[33mwarn[0m] [0m[0mone warning found[0m
