@@ -24,11 +24,9 @@ object Server extends cask.MainRoutes {
   }
 
   @cask.post("/hash/:hashKey")
-  def hash(hashKey: String, request: cask.Request): String = {//request: cask.Request
-
-    //return Stub.Register(hashKey, "1234", "SHA-384");
+  def hash(hashKey: String, request: cask.Request): String = {
     try {
-      Stub.GetHashByKey(hashKey)
+      Stub.GetHashByKey(hashKey,request.text())
     }catch {
       case e => cask.Abort(404).statusCode.+(": " + e);
     }

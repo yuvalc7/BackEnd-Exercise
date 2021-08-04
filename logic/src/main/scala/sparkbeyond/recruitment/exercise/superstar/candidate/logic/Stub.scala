@@ -1,9 +1,11 @@
 package sparkbeyond.recruitment.exercise.superstar.candidate.logic
 
+import sun.jvm.hotspot.HelloWorld.e
+
 import scala.collection.mutable.HashMap
-import scala.collection.Set
-import java.security.MessageDigest
-import java.math.BigInteger
+import java.security.{MessageDigest, NoSuchAlgorithmException}
+import java.nio.charset.StandardCharsets
+import java.security.spec.InvalidKeySpecException
 import java.text.SimpleDateFormat
 import java.util.{Calendar, Date}
 import java.util.Base64;
@@ -20,17 +22,13 @@ class Stub {
     var strResult : String = "";
     var index: Int = 0;
     hashMap.keys.foreach { (key) =>
-    //  val algorithm: String  =
         hashMap.get(key) match {
         case Some(str) => {
           strResult = strResult + "[ " + key + " , " + str.split("/")(1) + " , " +hashKeyTimestamp(index) + " ] ";
           index = index+1;
-//          str.split("/")(1);
         }
         case None => throw new Exception("An Error Occurred, Pleas Try Again In A Few Minutes ");
       }
-//      strResult = strResult + "[ " + key + " , " + algorithm + " , " +hashKeyTimestamp(index) + " ] ";
-//      index = index+1;
     };
     strResult ;
   }
@@ -48,37 +46,27 @@ class Stub {
       }
   }
 
-  def GetHashByKey(hashKey: String): String ={
+  def GetHashByKey(hashKey: String, secret: String): String ={
 
       val saltAndAlgorithm: Array[String] = hashMap.get(hashKey) match {
         case Some(str) => str.split("/");
-        case None => throw new Exception("Non Existing Hash Key");
+        case None => throw new RuntimeException("Non Existing Hash Key");
       }
-      println(saltAndAlgorithm(0), saltAndAlgorithm(1).trim());
-      val currentAlgorithm = MessageDigest.getInstance(saltAndAlgorithm(1).trim());
-      currentAlgorithm.update(saltAndAlgorithm(0).getBytes());
-     // val digest = currentAlgorithm.digest(hashKey.getBytes)
-//      println(digest)
-//      val hashBase64 = Base64.getEncoder.encode(digest)
-//      println(hashBase64)
-      val digest = currentAlgorithm.digest(hashKey.getBytes)
-      val bigInt = new BigInteger(1, digest)
-      val hashedString = bigInt.toString(16)
-     // hashBase64.toString
-      hashedString
-//      BaseEncoding.base64()
-//        .encode("user:pass".getBytes(Charsets.UTF_8)));
-   // }
-
-   // "Key Not Exist"
+      try {
+        val currentAlgorithm = MessageDigest.getInstance(saltAndAlgorithm(1).trim());
+        currentAlgorithm.update(saltAndAlgorithm(0).getBytes());// equal to salt + secret
+        val bytes: Array[Byte]  = currentAlgorithm.digest(secret.getBytes(StandardCharsets.UTF_8))
+        Base64.getEncoder.encodeToString(bytes)
+      }catch {
+        case e @ (_: NoSuchAlgorithmException ) => throw new RuntimeException("No Such Algorithm", e)
+      }
   }
-
-
 }
 
 object Stub {
   //singleton class
   private val obj = new Stub();
+
   def Register(hashKey: String, salt: String, algorithm: String): String ={
      obj.Register(hashKey, salt, algorithm)
   }
@@ -86,7 +74,7 @@ object Stub {
      obj.GetHashKeysListRegister()
   }
 
-  def GetHashByKey(hashKey: String ) : String = {
-     obj.GetHashByKey(hashKey);
+  def GetHashByKey(hashKey: String, secret: String ) : String = {
+     obj.GetHashByKey(hashKey,secret);
   }
 }
